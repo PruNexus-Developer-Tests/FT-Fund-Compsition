@@ -1,0 +1,28 @@
+name: Generate Fund Compositions Artifact
+
+on:
+  workflow_dispatch: # Allows manual triggering with inputs
+    inputs:
+      date:
+        description: "Date for the artifact (format: YYYY-MM-DD). Defaults to today."
+        required: false
+        default: ""
+
+jobs:
+  generate-fund-compositions:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+
+    - name: Generate fund compositions artifact
+      run: |
+        mkdir -p artifacts
+        python generate_fund_compositions.py "${{ github.event.inputs.date }}"
+
+    - name: Upload artifact
+      uses: actions/upload-artifact@v3
+      with:
+        name: fund-compositions-artifact-${{ github.run_id }}
+        path: artifacts/fund_compositions.json
