@@ -1,7 +1,7 @@
 name: Generate Fund Compositions Artifact
 
 on:
-  workflow_dispatch: # Allows manual triggering with inputs
+  workflow_dispatch: # Allows manual triggering of the action
     inputs:
       date:
         description: "Date for the artifact (format: YYYY-MM-DD). Defaults to today."
