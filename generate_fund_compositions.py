@@ -3,19 +3,8 @@ import random
 from datetime import datetime
 import sys
 
-# Fixed tickers for each fund
-fund_tickers = {
-    "Fund A": ["AAPL", "GOOG", "MSFT"],
-    "Fund B": ["AMZN", "TSLA", "NVDA"],
-    "Fund C": ["JPM", "BAC", "V"],
-    "Fund D": ["XOM", "CVX", "COP"],
-}
-
-# Load funds from Portfolio 1 artifact
-def load_portfolio_funds():
-    with open("artifacts/portfolio.json", "r") as f:
-        portfolio = json.load(f)
-    return [fund["name"] for fund in portfolio["funds"]]
+# Fixed tickers for fund composition
+all_tickers = ["AAPL", "GOOG", "MSFT", "AMZN", "TSLA", "NVDA", "JPM", "BAC", "V", "XOM", "CVX", "COP"]
 
 # Generate random proportions for each fund
 def generate_fund_compositions(fund_names, date):
@@ -25,10 +14,7 @@ def generate_fund_compositions(fund_names, date):
     }
     
     for fund in fund_names:
-        tickers = fund_tickers.get(fund, [])
-        
-        if not tickers:
-            continue
+        tickers = random.sample(all_tickers, random.randint(2, 5))  # Each fund has 2-5 tickers
         
         positions = []
         remaining_proportion = 1.0
@@ -58,8 +44,8 @@ if __name__ == "__main__":
     # Accept date input or default to today
     input_date = sys.argv[1] if len(sys.argv) > 1 else datetime.now().strftime("%Y-%m-%d")
     
-    # Load funds from Portfolio 1
-    fund_names = load_portfolio_funds()
+    # Predefined fund names
+    fund_names = ["Fund A", "Fund B", "Fund C", "Fund D"]
     
     # Generate compositions
     fund_compositions = generate_fund_compositions(fund_names, input_date)
